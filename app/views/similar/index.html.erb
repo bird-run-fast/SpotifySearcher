@@ -1,0 +1,42 @@
+
+<!-- 検索フォーム部分-->
+<div class="tab-content">
+  <!-- ユーザー名検索のフォーム -->
+  <div class="tab-pane active tab-form" id="tab-user" role="tabpane1">
+    <%= form_tag(root_path, method: :get) do %>
+      <span>検索:</span>
+      <%= text_field_tag "search", "", :required => true, class: "input-mysize-l", placeholder: "アーティスト名" %>
+      <%= submit_tag "検索", class: "btn btn-success" %>
+      <% end %>
+  </div>
+</div>
+
+
+<% if @artists %>
+  <h2>artist</h2>
+
+  <!--　検索条件に合った募集一覧表示の部分(メイン部分) -->
+    <table class="table" border=1>
+      <!-- 募集一覧のヘッダー部分 -->
+      <thead class="thead-dark">
+        <tr class="d-flex">
+          <th class="col-xs-8">アーティスト名</th>
+          <th class="col-xs-2">ジャンル</th>
+          <th class="col-xs-2">フォロワー</th>
+        </tr>
+      </thead>
+      <!-- 募集一覧のヘッダー部分ここまで -->
+      <!-- 募集一覧のボディー部分 -->
+      <tbody>
+        <% @artists.each do |artist|%>
+          <tr class="d-flex">
+            <td class="col-xs-7"><%= artist.name.truncate(30) %></td>
+            <td class="col-xs-2"><%= artist.genres.join(", ").truncate(30) %></td>
+            <td class="col-xs-3"><%= artist.followers["total"] %></td>
+          </tr>
+        <% end %>
+      </tbody>
+      <!-- 募集一覧のボディー部分ここまで -->
+    </table>
+    <!-- 検索条件にあった募集の一覧表示の部分ここまで-->
+<% end %>
